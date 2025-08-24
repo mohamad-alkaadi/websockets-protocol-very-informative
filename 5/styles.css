@@ -1,0 +1,57 @@
+html {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #333;
+}
+
+/* our main div wrapper */
+#wrapper {
+  width: 600px;
+  background: #fff;
+  border-top: 5px solid rgb(74, 207, 74);
+  padding: 1em;
+  margin: 1em auto;
+  box-shadow: 0 5px 10px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+#status {
+  display: inline;
+  margin: 1em;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #9a9a9a;
+  border-radius: 3px;
+  min-height: 20%;
+  margin-bottom: 1em;
+}
+
+button {
+  border: none;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  border-radius: 3px;
+  color: rgb(24, 24, 24);
+  border-bottom: 1px solid black;
+  background: rgb(228, 79, 79);
+}
+
+button[type="submit"] {
+  background: rgb(112, 223, 119);
+}
+
+button:hover {
+  background: blue;
+  opacity: 0.7;
+  color: white;
+  cursor: pointer;
+}
+
+#form {
+  display: none;
+}
