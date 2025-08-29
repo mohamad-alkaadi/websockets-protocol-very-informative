@@ -18,8 +18,55 @@
           required
         ></textarea>
         <button type="submit">Send Message</button>
-        <button id="clos">Close Connection</button>
+        <button id="close_ws">Close Connection</button>
       </form>
     </div>
+    <script>
+      // dom elements
+      let open_ws_btn = document.getElementById("open_ws")
+      let close_ws_btn = document.getElementById("close_ws")
+      // form
+      let form = document.getElementById("form")
+      // other
+      let socketStatus = document.getElementById("status")
+      let table = document.getElementById("table")
+      let message = document.getElementById("message")
+
+      // websocket server
+      open_ws_btn.addEventListener("click", () => {
+        // Button styling when button is clicked, disable it
+        open_ws_btn.disabled = true
+        open_ws_btn.style.background = "gray"
+        open_ws_btn.style.pointerEvents = "none"
+        open_ws_btn.textContent = "Button Disabled"
+        // Change the status
+        socketStatus.innerHTML = "Status: Connecting..."
+        let url = "ws://localhost:8080"
+        let socket = new WebSocket(url)
+        console.log(socket)
+
+        // OPEN
+        socket.onopen = (openEvent) => {
+          socketStatus.innerHTML = `Status: Connected to ${openEvent.target.url}`
+          socketStatus.className = "open"
+          form.className = "show"
+        }
+        // RECEIVE: handle message when received from the server
+        socket.onmessage = (messageEvent) => {
+          let msg = messageEvent.data
+          // += means add to everything that exists inside the html tag
+          table.innerHTML += "<li><span>Received: </span>" + msg + "</li>"
+        }
+        // CLOSE: we are listining for close event we are not doing the closing action
+        socket.onclose = (closeEventObject) => {
+          table.innerHTML +=
+            "<li class='received, closed'><span>CLOSED: </span>" +
+            "CLOSED" +
+            "</li>"
+          socketStatus.innerHTML = "Disconnected from websocket"
+          socketStatus.className = "closed"
+        }
+      })
+    </script>
   </body>
 </html>
