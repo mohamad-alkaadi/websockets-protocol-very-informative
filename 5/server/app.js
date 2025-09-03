@@ -44,13 +44,13 @@ websocket.on("request", (req) => {
   connection.on("message", (message) => {
     // we send the message and encode it in utf8
     connection.send(
-      `Ping. Message received from the client ${message.utf8Data}`
+      `Ping. Message received from the client: ${message.utf8Data}`
     )
   })
   // listen for the close event
-  connection.on("close", (code, description) => {
+  connection.on("close", (code, reason) => {
     console.log(
-      `Peer connection ${connection.remoteAddress} disconnected. Thee reason is: ${description} and the closure code is: ${code}`
+      `Peer connection ${connection.remoteAddress} disconnected. Thee reason is: ${reason} and the closure code is: ${code}`
     )
   })
 })

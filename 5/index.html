@@ -57,7 +57,7 @@
           // += means add to everything that exists inside the html tag
           table.innerHTML += "<li><span>Received: </span>" + msg + "</li>"
         }
-        // CLOSE: we are listining for close event we are not doing the closing action
+        // CLOSE: we are listening for close event we are not doing the closing action
         socket.onclose = (closeEventObject) => {
           table.innerHTML +=
             "<li class='received, closed'><span>CLOSED: </span>" +
@@ -66,6 +66,38 @@
           socketStatus.innerHTML = "Disconnected from websocket"
           socketStatus.className = "closed"
         }
+        // ERROR: it will give us an event
+        socket.onerror = (errorEventObject) => {
+          console.log(errorEventObject)
+          socketStatus.innerHTML = "Error"
+          socketStatus.className = "closed"
+        }
+
+        //  SEND EVENT
+        form.addEventListener("submit", (e) => {
+          e.preventDefault()
+          // if client and server in connected state
+          if (socket.readyState === 1) {
+            // the value inside the textarea that we named message
+            let user_text = message.value
+            socket.send(user_text)
+            //update our table
+            table.innerHTML += `<li class="sent"><span>SENT:</span>${user_text}</li>`
+            // clean textarea
+            message.value = ""
+          }
+        })
+        // CLOSE METHOD
+        close_ws_btn.addEventListener("click", () => {
+          // closure code , reason
+          socket.close(1000, "I don't like you")
+          message.removeAttribute("required")
+          form.classList.remove("show")
+          open_ws_btn.disabled = false
+          open_ws_btn.style.background = ""
+          open_ws_btn.style.pointerEvents = ""
+          open_ws_btn.textContent = "Open WS"
+        })
       })
     </script>
   </body>
